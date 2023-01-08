@@ -4,8 +4,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        Baloo: "Baloo2",
+        Baloo: "'Baloo 2'",
         Roboto: "Roboto",
+      },
+      backgroundImage: {
+        "home-background": "url('./src/assets/Background.png')",
       },
       colors: {
         "yellow-dark": "#C47F17",

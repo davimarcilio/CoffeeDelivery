@@ -2,7 +2,7 @@ import { MapPin, ShoppingCart } from "phosphor-react";
 import Logo from "../assets/Logo.png";
 export function Header() {
   return (
-    <header className="font-Roboto flex justify-between px-40 py-8">
+    <header className="font-Roboto flex justify-between py-8">
       <img src={Logo} alt="Coffé Delivery" />
       <div className="flex gap-3">
         <button className="flex bg-purple-light p-2 rounded-md justify-center items-center">

@@ -7,6 +7,9 @@ module.exports = {
         Baloo: "'Baloo 2'",
         Roboto: "Roboto",
       },
+      fontSize: {
+        xxs: "0.6250rem",
+      },
       backgroundImage: {
         "home-background": "url('./src/assets/Background.png')",
       },

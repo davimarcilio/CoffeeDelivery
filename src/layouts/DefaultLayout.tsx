@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 
 export function DefaultLayout() {
   return (
-    <div className="px-40">
+    <div className="px-40 bg-background">
       <Header />
       <Outlet />
     </div>

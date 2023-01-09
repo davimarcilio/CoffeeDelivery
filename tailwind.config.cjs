@@ -7,6 +7,9 @@ module.exports = {
         Baloo: "'Baloo 2'",
         Roboto: "Roboto",
       },
+      borderRadius: {
+        36: "2.25rem",
+      },
       fontSize: {
         xxs: "0.6250rem",
       },

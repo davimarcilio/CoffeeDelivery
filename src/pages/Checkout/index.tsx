@@ -37,7 +37,7 @@ export function Checkout() {
     }
     if (!!CEP) {
       const interval = setInterval(() => {
-        return getAddress(CEP);
+        return getAddress(CEP.replace("-", ""));
       }, 1000);
       return () => clearInterval(interval);
     }
@@ -141,7 +141,7 @@ export function Checkout() {
       <div className="flex flex-col gap-3">
         <h1 className="font-bold font-Baloo text-lg">Cafés selecionados</h1>
 
-        <Card>
+        <Card borderRadius="rounded-tr-36 rounded-bl-36">
           <ProductItem />
           <hr />
           <ProductItem />

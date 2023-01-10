@@ -19,7 +19,7 @@ export function Quantity() {
     <div className="flex justify-center items-center relative">
       <button
         onClick={handleIncrementQuantity}
-        className="absolute left-2 group"
+        className="absolute left-1 group"
         type="button"
       >
         <Plus
@@ -35,7 +35,7 @@ export function Quantity() {
       />
       <button
         onClick={handleDecrementQuantity}
-        className="absolute right-2 group"
+        className="absolute right-1 group"
         type="button"
       >
         <Minus className="transition-colors text-purple group-hover:text-purple-dark" />

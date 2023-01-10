@@ -1,5 +1,5 @@
-import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
-import LogoTeste from "../../../../public/Type=Mochaccino.png";
+import { ShoppingCartSimple } from "phosphor-react";
+// import LogoTeste from "../../../../public/Type=Mochaccino.png";
 import { Product } from "../../../context/ProductContext";
 import { Quantity } from "../../components/Quantity";
 import "./ProductItem.css";
@@ -8,11 +8,11 @@ interface ProductProps {
 }
 
 export function ProductItem({ product }: ProductProps) {
-  const { name, description, price, types } = product;
+  const { name, description, price, types, image } = product;
   const treatedPrice = price.toString().replace(".", ",") + "0";
   return (
-    <section className="flex flex-col justify-center items-center bg-base-card font-Roboto text-center rounded-md rounded-tr-36 rounded-bl-36 p-6">
-      <img className="-mt-4" src={LogoTeste} alt="Expresso Tracicional" />
+    <section className="flex flex-col justify-center items-center bg-base-card font-Roboto text-center rounded-md rounded-tr-36 rounded-bl-36 p-6 pt-0">
+      <img className="-mt-6" src={image} alt="Expresso Tracicional" />
       <div className="flex gap-1">
         {types.map((type) => (
           <span className="bg-yellow-light text-yellow-dark rounded-full font-bold text-xxs py-1 px-2 mt-3">

@@ -1,5 +1,6 @@
 import { Trash } from "phosphor-react";
-import { Cart } from "../../../context/ProductContext";
+import { useContext } from "react";
+import { Cart, ProductsContext } from "../../../context/ProductContext";
 import { Quantity } from "../../components/Quantity";
 
 interface ProductItemProps {
@@ -8,6 +9,13 @@ interface ProductItemProps {
 }
 
 export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
+  const ProductContext = useContext(ProductsContext);
+  const { removeFromCart } = ProductContext;
+
+  function handleRemoveFromCart(productId: number) {
+    removeFromCart(productId);
+  }
+
   return (
     <section className="flex justify-between gap-5">
       <img className="w-16 h-16" src={product.image} alt="" />
@@ -19,6 +27,7 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
             onChangeQuantity={onChangeQuantity}
           />
           <button
+            onClick={() => handleRemoveFromCart(product.id)}
             className="transition-colors px-2 gap-1 rounded-md bg-base-button text-xs flex justify-center items-center font-Roboto hover:bg-base-hover text-base-text leading-5"
             type="button"
           >

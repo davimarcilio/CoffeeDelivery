@@ -3,6 +3,10 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      width: {
+        "200px": "12.5rem",
+        "60px": "3.75rem",
+      },
       fontFamily: {
         Baloo: "'Baloo 2'",
         Roboto: "Roboto",

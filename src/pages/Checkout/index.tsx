@@ -3,16 +3,21 @@ import {
   CreditCard,
   CurrencyDollar,
   MapPinLine,
+  Minus,
   Money,
+  Plus,
+  Trash,
 } from "phosphor-react";
+
 import { Card } from "./components/Card";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
+import { ProductItem } from "./components/ProductItem";
 
 export function Checkout() {
   return (
-    <form className="flex">
-      <div className="flex flex-col gap-3">
+    <form className="flex gap-8 justify-between mb-4">
+      <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
           <div className="flex gap-2">
@@ -27,10 +32,10 @@ export function Checkout() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <Input className="w-52" placeholder="CEP" />
+            <Input className="w-200px" placeholder="CEP" />
             <Input placeholder="Rua" />
             <div className="flex gap-3">
-              <Input placeholder="Número" />
+              <Input className="w-200px" placeholder="Número" />
               <div className="flex justify-center items-center flex-1 w-full relative">
                 <label
                   className="absolute right-3 text-base-label text-xs italic font-Roboto "
@@ -47,9 +52,9 @@ export function Checkout() {
               </div>
             </div>
             <div className="flex gap-3">
-              <Input placeholder="Bairro" />
-              <Input placeholder="Cidade" />
-              <Input placeholder="UF " />
+              <Input className="w-200px" placeholder="Bairro" />
+              <Input className="flex-1 " placeholder="Cidade" />
+              <Input className="w-60px" placeholder="UF" />
             </div>
           </div>
         </Card>
@@ -82,35 +87,38 @@ export function Checkout() {
               labelText="DINHEIRO"
               type="money"
             />
-
-            {/* <input type="radio">CARTÃO DE CRÉDITO
-            <input type="radio">CARTÃO DE DÉBITO
-            <input type="radio">DINHEIRO</input> */}
           </div>
         </Card>
       </div>
-      <div>
-        <h1>Cafés selecionados</h1>
+      <div className="flex flex-col gap-3">
+        <h1 className="font-bold font-Baloo text-lg">Cafés selecionados</h1>
 
-        <div>
-          <section>Café</section>
+        <Card>
+          <ProductItem />
           <hr />
-          <ul>
-            <li>
+          <ProductItem />
+          <hr />
+          <ul className="flex flex-col gap-3">
+            <li className="text-base-text font-Roboto text-sm flex justify-between">
               Total de itens
-              <strong>R$ 29,70</strong>
+              <strong className="text-base font-normal">R$ 29,70</strong>
             </li>
-            <li>
+            <li className="text-base-text font-Roboto text-sm flex justify-between">
               Entrega
-              <strong>R$ 3,50</strong>
+              <strong className="text-base font-normal">R$ 3,50</strong>
             </li>
-            <li>
+            <li className="text-base-subtitle font-bold font-Roboto text-xl flex justify-between">
               Total
-              <strong>R$ 33,20</strong>
+              <strong className="text-base-subtitle text-xl">R$ 33,20</strong>
             </li>
           </ul>
-          <button type="submit">CONFIRMAR PEDIDO</button>
-        </div>
+          <button
+            className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
+            type="submit"
+          >
+            CONFIRMAR PEDIDO
+          </button>
+        </Card>
       </div>
     </form>
   );

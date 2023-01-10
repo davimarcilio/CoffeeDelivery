@@ -1,6 +1,7 @@
 import { Minus, Plus, ShoppingCartSimple } from "phosphor-react";
 import LogoTeste from "../../../../public/Type=Mochaccino.png";
 import { Product } from "../../../context/ProductContext";
+import { Quantity } from "../../components/Quantity";
 import "./ProductItem.css";
 interface ProductProps {
   product: Product;
@@ -31,21 +32,9 @@ export function ProductItem({ product }: ProductProps) {
           </strong>
         </p>
         <div className="flex gap-2 justify-center items-center">
-          <div className="flex justify-center items-center relative">
-            <button className="absolute left-2" type="button">
-              <Plus size={14} className="text-purple" />
-            </button>
-            <input
-              placeholder="1"
-              className="text-center px-6 w-16 py-2 rounded-md bg-base-button"
-              type="number"
-            />
-            <button className="absolute right-2" type="button">
-              <Minus className="text-purple" />
-            </button>
-          </div>
+          <Quantity />
           <button
-            className="text-background bg-purple-dark p-2 rounded-md"
+            className="transition-colors text-background bg-purple-dark hover:bg-purple p-2 rounded-md"
             type="submit"
           >
             <ShoppingCartSimple size={22} weight="fill" />

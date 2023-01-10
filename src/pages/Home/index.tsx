@@ -3,7 +3,7 @@ import { Products } from "./components/Products";
 
 export function Home() {
   return (
-    <main>
+    <main className="mt-24">
       <Header />
       <Products />
     </main>

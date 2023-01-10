@@ -49,7 +49,7 @@ export function Header() {
           </ul>
         </div>
       </div>
-      <img src={Cafe} alt="Café" className="z-50" />
+      <img src={Cafe} alt="Café" className="z-40" />
     </section>
   );
 }

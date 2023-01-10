@@ -2,11 +2,12 @@ import { Minus, Plus } from "phosphor-react";
 import { ChangeEvent, useEffect, useState } from "react";
 
 interface QuantityProps {
+  value?: number;
   onChangeQuantity: (value: number) => void;
 }
 
-export function Quantity({ onChangeQuantity }: QuantityProps) {
-  const [quantity, setQuantity] = useState(1);
+export function Quantity({ onChangeQuantity, value }: QuantityProps) {
+  const [quantity, setQuantity] = useState(value || 1);
 
   useEffect(() => {
     onChangeQuantity(quantity);

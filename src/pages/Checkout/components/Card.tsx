@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 interface CardProps {
-  children: ReactNode;
+  children: ReactNode | ReactNode[];
   borderRadius?: string;
 }
 

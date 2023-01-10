@@ -11,7 +11,8 @@ import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { ProductItem } from "./components/ProductItem";
 import cep from "cep-promise";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { ProductsContext } from "../../context/ProductContext";
 
 export interface AddressProps {
   cep: string;
@@ -44,8 +45,15 @@ export function Checkout() {
     }
   }, [CEP]);
 
+  const [quantity, setQuantity] = useState(1);
+  function onChangeQuantity(quantity: number) {
+    setQuantity(quantity);
+  }
+  const CartProducts = useContext(ProductsContext);
+  const { cart } = CartProducts;
+
   return (
-    <form className="flex gap-8 justify-between mb-4">
+    <form className="flex gap-8 justify-between mb-4 mt-24">
       <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
@@ -144,10 +152,16 @@ export function Checkout() {
         <h1 className="font-bold font-Baloo text-lg">Cafés selecionados</h1>
 
         <Card borderRadius="rounded-tr-36 rounded-bl-36">
-          <ProductItem />
-          <hr />
-          <ProductItem />
-          <hr />
+          {cart.map((product) => {
+            return (
+              <ProductItem
+                key={product.id}
+                product={product}
+                onChangeQuantity={onChangeQuantity}
+              />
+            );
+          })}
+
           <ul className="flex flex-col gap-3">
             <li className="text-base-text font-Roboto text-sm flex justify-between">
               Total de itens

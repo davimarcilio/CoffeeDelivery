@@ -15,29 +15,31 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductContext";
 import { NavLink } from "react-router-dom";
 
-export interface AddressProps {
-  cep: string;
-  state: string;
-  city: string;
-  street: string;
-  neighborhood: string;
-}
-
 export function Checkout() {
   const [CEP, setCEP] = useState("");
+  const CartProducts = useContext(ProductsContext);
+  const { cart, address, setAddressContext } = CartProducts;
+  const [complement, setComplement] = useState(address.complement || "");
+  const [number, setNumber] = useState(address.number || "");
 
-  const [address, setAddress] = useState<AddressProps>({
-    cep: "",
-    state: "",
-    city: "",
-    street: "",
-    neighborhood: "",
-  });
+  useEffect(() => {
+    if (complement !== "" || number !== "") {
+      setAddressContext({
+        ...address,
+        complement,
+        number,
+      });
+    }
+  }, [complement, number]);
 
   useEffect(() => {
     async function getAddress(cepStr: string) {
       const response = await cep(cepStr);
-      setAddress(response);
+      setAddressContext({
+        ...response,
+        complement,
+        number,
+      });
     }
     if (!!CEP) {
       const interval = setInterval(() => {
@@ -50,15 +52,15 @@ export function Checkout() {
   const [quantity, setQuantity] = useState(1);
   const [treatedTotalItemsPriceOnCart, setTreatedTotalItemsPriceOnCart] =
     useState("");
+
   const [
     treatedTotalItemsPriceOnCartWithDestination,
     setTreatedTotalItemsPriceOnCartWithDestination,
   ] = useState("");
+
   function onChangeQuantity(quantity: number) {
     setQuantity(quantity);
   }
-  const CartProducts = useContext(ProductsContext);
-  const { cart } = CartProducts;
 
   useEffect(() => {
     if (cart.length > 0) {
@@ -99,13 +101,19 @@ export function Checkout() {
             <Input
               required
               onChange={(e) => setCEP(e.currentTarget.value)}
-              value={CEP}
+              value={address.cep}
               className="w-200px"
               placeholder="CEP"
             />
             <Input placeholder="Rua" value={address.street} />
             <div className="flex gap-3">
-              <Input required className="w-200px" placeholder="Número" />
+              <Input
+                required
+                onChange={(e) => setNumber(e.currentTarget.value)}
+                value={address.number}
+                className="w-200px"
+                placeholder="Número"
+              />
               <div className="flex justify-center items-center flex-1 w-full relative">
                 <label
                   className="absolute right-3 text-base-label text-xs italic font-Roboto "
@@ -114,6 +122,8 @@ export function Checkout() {
                   Opcional
                 </label>
                 <Input
+                  onChange={(e) => setComplement(e.currentTarget.value)}
+                  value={address.complement}
                   name="complemento"
                   id="complemento"
                   placeholder="Complemento"

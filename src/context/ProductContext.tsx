@@ -16,6 +16,18 @@ export interface Product {
 export interface Cart extends Product {
   quantity: number | 1;
 }
+export interface AddressProps {
+  cep: string;
+  state: string;
+  city: string;
+  street: string;
+  neighborhood: string;
+}
+
+interface AddressTotalProps extends AddressProps {
+  number: string;
+  complement: string;
+}
 
 const products = [
   {
@@ -139,9 +151,11 @@ const products = [
 interface ProductsContextType {
   products: Product[];
   cart: Cart[];
+  address: AddressTotalProps;
   addToCart: (newProduct: Cart) => void;
   removeFromCart: (productId: Number) => void;
   changeCartQuantity: (productId: number, quantity: number) => void;
+  setAddressContext: (address: AddressTotalProps) => void;
 }
 
 export const ProductsContext = createContext({} as ProductsContextType);
@@ -207,9 +221,40 @@ export function ProductsContextProvider({
     );
   }
 
+  const [address, setAddress] = useState<AddressTotalProps>({
+    cep: "",
+    city: "",
+    state: "",
+    neighborhood: "",
+    street: "",
+    complement: "",
+    number: "",
+  });
+
+  function setAddressContext(address: AddressTotalProps) {
+    localStorage.setItem("CoffeeDelivery:1.0/address", JSON.stringify(address));
+    setAddress(JSON.parse(localStorage.getItem("CoffeeDelivery:1.0/address")!));
+  }
+
+  useEffect(() => {
+    if (!!localStorage.getItem("CoffeeDelivery:1.0/address")) {
+      setAddress(
+        JSON.parse(localStorage.getItem("CoffeeDelivery:1.0/address")!)
+      );
+    }
+  }, []);
+
   return (
     <ProductsContext.Provider
-      value={{ products, cart, addToCart, removeFromCart, changeCartQuantity }}
+      value={{
+        products,
+        cart,
+        address,
+        addToCart,
+        setAddressContext,
+        removeFromCart,
+        changeCartQuantity,
+      }}
     >
       {children}
     </ProductsContext.Provider>

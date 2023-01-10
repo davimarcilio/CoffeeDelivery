@@ -1,5 +1,4 @@
 import { FormEvent } from "react";
-import ReactInputMask from "react-input-mask";
 interface InputProps {
   placeholder: string;
   className?: string;
@@ -18,19 +17,7 @@ export function Input({
   value,
   required,
 }: InputProps) {
-  return placeholder === "CEP" ? (
-    <ReactInputMask
-      mask={"99999-999"}
-      required={required}
-      defaultValue={value}
-      onChange={onChange}
-      name={name}
-      type="text"
-      pattern="\d{5}-?\d{3}"
-      className={`${className} p-3 bg-base-input rounded-sm placeholder:text-base-label border border-base-button`}
-      placeholder={placeholder}
-    />
-  ) : (
+  return (
     <input
       required={required}
       defaultValue={value}

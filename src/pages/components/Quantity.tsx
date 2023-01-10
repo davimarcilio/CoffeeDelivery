@@ -1,8 +1,16 @@
 import { Minus, Plus } from "phosphor-react";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
-export function Quantity() {
+interface QuantityProps {
+  onChangeQuantity: (value: number) => void;
+}
+
+export function Quantity({ onChangeQuantity }: QuantityProps) {
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    onChangeQuantity(quantity);
+  }, [quantity]);
 
   function handleIncrementQuantity() {
     if (quantity !== 99) {
@@ -28,6 +36,9 @@ export function Quantity() {
         />
       </button>
       <input
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setQuantity(Number(e.target.value))
+        }
         placeholder="1"
         value={quantity}
         className="text-center px-6 w-16 py-2 rounded-md bg-base-button"

@@ -13,7 +13,7 @@ import { ProductItem } from "./components/ProductItem";
 import cep from "cep-promise";
 import { useEffect, useState } from "react";
 
-interface AddressProps {
+export interface AddressProps {
   cep: string;
   state: string;
   city: string;
@@ -30,6 +30,7 @@ export function Checkout() {
     street: "",
     neighborhood: "",
   });
+
   useEffect(() => {
     async function getAddress(cepStr: string) {
       const response = await cep(cepStr);
@@ -42,6 +43,7 @@ export function Checkout() {
       return () => clearInterval(interval);
     }
   }, [CEP]);
+
   return (
     <form className="flex gap-8 justify-between mb-4">
       <div className="flex flex-col gap-3 flex-1">

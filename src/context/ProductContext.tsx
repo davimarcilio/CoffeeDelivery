@@ -1,4 +1,4 @@
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useState } from "react";
 
 interface Type {
   type: "TRADICIONAL" | "GELADO" | "COM LEITE" | "ESPECIAL" | "ALCOÓLICO";
@@ -11,6 +11,10 @@ export interface Product {
   price: number;
   image: string;
   types: Type[];
+}
+
+export interface Cart extends Product {
+  quantity: number | 1;
 }
 
 const products = [
@@ -134,6 +138,8 @@ const products = [
 
 interface ProductsContextType {
   products: Product[];
+  cart: Cart[];
+  addToCart: (newProduct: Cart) => void;
 }
 
 export const ProductsContext = createContext({} as ProductsContextType);
@@ -145,8 +151,14 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
+  const [cart, setCart] = useState<Cart[]>([]);
+
+  function addToCart(newProduct: Cart) {
+    setCart((state) => [...state, newProduct]);
+  }
+
   return (
-    <ProductsContext.Provider value={{ products }}>
+    <ProductsContext.Provider value={{ products, cart, addToCart }}>
       {children}
     </ProductsContext.Provider>
   );

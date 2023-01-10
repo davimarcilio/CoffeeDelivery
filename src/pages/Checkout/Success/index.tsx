@@ -1,3 +1,64 @@
+import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
+import illustration from "../../../assets/Illustration.png";
+// import { SuccessInfo } from "./components/SuccessInfo";
 export function Success() {
-  return <h1>Success</h1>;
+  return (
+    <main className="mt-28 flex flex-col gap-10">
+      <div>
+        <h1 className="text-yellow-dark font-Baloo font-extrabold text-3xl">
+          Uhu! Pedido confirmado
+        </h1>
+        <p className="text-xl font-Roboto text-base-subtitle">
+          Agora é só aguardar que logo o café chegará até você{" "}
+        </p>
+      </div>
+      <div className="flex justify-between">
+        <div className="flex justify-between bg-gradient-to-br from-[#dbac2c] p-1 to-[#8047f8]  border  flex-1 rounded-md rounded-tr-36 rounded-bl-36">
+          <div className="flex flex-col rounded-md bg-background w-full h-full rounded-tr-36 rounded-bl-36">
+            <ul className="flex flex-col gap-8 justify-center h-full">
+              <li className="pl-10 flex gap-3 items-center">
+                <div className="p-2 h-min bg-purple rounded-full">
+                  <MapPin className="text-background" weight="fill" size={16} />
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-Roboto text-base-text">
+                    Entrega em
+                    <strong className="font-bold">
+                      Avenida Luiz Lazarim, 873
+                    </strong>
+                  </p>
+                  <p className="font-Roboto text-base-text">
+                    Vila Floresta, Criciúma, SC
+                  </p>
+                </div>
+              </li>
+              <li className="pl-10 flex gap-3 items-center">
+                <div className="p-2 h-min bg-yellow rounded-full">
+                  <Timer className="text-background" weight="fill" size={16} />
+                </div>
+                <div className="flex flex-col font-Roboto text-base-text">
+                  Previsão de entrega
+                  <strong>20 min - 30 min</strong>
+                </div>
+              </li>
+              <li className="pl-10 flex gap-3 items-center">
+                <div className="p-2 h-min bg-yellow-dark rounded-full">
+                  <CurrencyDollar
+                    className="text-background"
+                    weight="fill"
+                    size={16}
+                  />
+                </div>
+                <div className="flex flex-col font-Roboto text-base-text">
+                  Pagamento na entrega
+                  <strong>Cartão de Crédito</strong>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <img src={illustration} alt="Moto" />
+      </div>
+    </main>
+  );
 }

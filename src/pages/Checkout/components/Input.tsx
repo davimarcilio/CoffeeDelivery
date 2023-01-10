@@ -18,15 +18,25 @@ export function Input({
   value,
   required,
 }: InputProps) {
-  return (
+  return placeholder === "CEP" ? (
     <ReactInputMask
-      mask={placeholder === "CEP" ? "99999-999" : ""}
+      mask={"99999-999"}
       required={required}
       defaultValue={value}
       onChange={onChange}
       name={name}
       type="text"
       pattern="\d{5}-?\d{3}"
+      className={`${className} p-3 bg-base-input rounded-sm placeholder:text-base-label border border-base-button`}
+      placeholder={placeholder}
+    />
+  ) : (
+    <input
+      required={required}
+      defaultValue={value}
+      onChange={onChange}
+      name={name}
+      type="text"
       className={`${className} p-3 bg-base-input rounded-sm placeholder:text-base-label border border-base-button`}
       placeholder={placeholder}
     />

@@ -166,6 +166,10 @@ export function ProductsContextProvider({
         })
       );
     } else {
+      localStorage.setItem(
+        "CoffeeDelivery:1.0/items",
+        JSON.stringify([...cart, newProduct])
+      );
       setCart((state) => [...state, newProduct]);
     }
   }

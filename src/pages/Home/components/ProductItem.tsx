@@ -11,7 +11,7 @@ interface ProductProps {
 export function ProductItem({ product }: ProductProps) {
   const { name, description, price, types, image, id } = product;
   const [quantity, setQuantity] = useState(1);
-  const treatedPrice = price.toString().replace(".", ",") + "0";
+  const treatedPrice = price.toFixed(2).toString().replace(".", ",");
   const ProductContext = useContext(ProductsContext);
   const { addToCart } = ProductContext;
 

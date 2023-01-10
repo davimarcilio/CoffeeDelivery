@@ -37,7 +37,7 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
         </div>
       </div>
       <strong className="font-Roboto text-base-text font-bold">
-        R$ {product.price}
+        R$ {product.price.toFixed(2)}
       </strong>
     </section>
   );

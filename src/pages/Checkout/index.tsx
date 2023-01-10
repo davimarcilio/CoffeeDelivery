@@ -13,6 +13,7 @@ import { ProductItem } from "./components/ProductItem";
 import cep from "cep-promise";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductContext";
+import { NavLink } from "react-router-dom";
 
 export interface AddressProps {
   cep: string;
@@ -24,8 +25,6 @@ export interface AddressProps {
 
 export function Checkout() {
   const [CEP, setCEP] = useState("");
-  // const [validAddress, setValidAddress] = useState(true);
-  // const [errorBar, setErrorBar] = useState("");
 
   const [address, setAddress] = useState<AddressProps>({
     cep: "",
@@ -34,17 +33,7 @@ export function Checkout() {
     street: "",
     neighborhood: "",
   });
-  // useEffect(() => {
-  //   if (address.city !== "Criciúma" && address.city !== "") {
-  //     return setValidAddress(true);
-  //   }
-  //   const timeout = setTimeout(() => {
-  //     setValidAddress(false);
-  //   }, 3000);
-  //   return () => {
-  //     clearTimeout(timeout);
-  //   };
-  // }, [address]);
+
   useEffect(() => {
     async function getAddress(cepStr: string) {
       const response = await cep(cepStr);
@@ -92,16 +81,6 @@ export function Checkout() {
 
   return (
     <form className="flex gap-8 justify-between mb-4 mt-24">
-      {/* {validAddress && (
-        <div className="absolute bg-red-400 px-10 py-4 right-10 top-24 z-50 flex flex-col">
-          <h1>Só são aceitos pedidos em criciúma!</h1>
-          <span
-            className={`bg-green-300 transition-all w-full duration-1000 h-1 absolute left-0 bottom-0`}
-          >
-            {" "}
-          </span>
-        </div>
-      )} */}
       <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
@@ -209,7 +188,6 @@ export function Checkout() {
               />
             );
           })}
-          <hr />
           {cart.length > 0 ? (
             <ul className="flex flex-col gap-3">
               <li className="text-base-text font-Roboto text-sm flex justify-between">
@@ -230,14 +208,26 @@ export function Checkout() {
               </li>
             </ul>
           ) : (
-            <h1>Seu carrinho está vazio</h1>
+            <h1 className="font-Roboto text-xl font-bold text-base-subtitle">
+              Seu carrinho está vazio
+            </h1>
           )}
-          <button
-            className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
-            type="submit"
-          >
-            CONFIRMAR PEDIDO
-          </button>
+          {cart.length > 0 ? (
+            <button
+              className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
+              type="submit"
+            >
+              CONFIRMAR PEDIDO
+            </button>
+          ) : (
+            <NavLink
+              to={"/"}
+              className="transition-colors bg-yellow hover:bg-yellow-dark flex justify-center items-center py-3 rounded-md text-white font-bold text-sm"
+              type="submit"
+            >
+              ADICIONAR PRODUTOS
+            </NavLink>
+          )}
         </Card>
       </div>
     </form>

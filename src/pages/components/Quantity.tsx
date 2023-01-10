@@ -15,11 +15,12 @@ export function Quantity({
 }: QuantityProps) {
   const [quantity, setQuantity] = useState(value || 1);
   const productContext = useContext(ProductsContext);
-
-  const { changeCartQuantity } = productContext;
+  const { changeCartQuantity, cart } = productContext;
   useEffect(() => {
     onChangeQuantity(quantity);
-    changeCartQuantity(productId || 0, quantity);
+    if (cart.length > 0) {
+      changeCartQuantity(productId || 0, quantity);
+    }
   }, [quantity]);
 
   function handleIncrementQuantity() {

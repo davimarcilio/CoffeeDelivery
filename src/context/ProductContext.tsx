@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface Type {
   type: "TRADICIONAL" | "GELADO" | "COM LEITE" | "ESPECIAL" | "ALCOÓLICO";
@@ -154,16 +154,26 @@ export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
   const [cart, setCart] = useState<Cart[]>([]);
-
+  useEffect(() => {
+    if (!!localStorage.getItem("CoffeeDelivery:1.0/items")) {
+      const localStoredItems = JSON.parse(
+        localStorage.getItem("CoffeeDelivery:1.0/items")!
+      );
+      setCart(localStoredItems);
+    }
+  }, []);
   function addToCart(newProduct: Cart) {
     if (!!cart.find((product) => product.id === newProduct.id)) {
-      setCart((state) =>
-        state.map((product) => {
-          if (product.id === newProduct.id) {
-            product.quantity = product.quantity + 1;
-          }
-          return product;
-        })
+      const changedCart = cart.map((product) => {
+        if (product.id === newProduct.id) {
+          product.quantity = product.quantity + 1;
+        }
+        return product;
+      });
+      setCart(changedCart);
+      localStorage.setItem(
+        "CoffeeDelivery:1.0/items",
+        JSON.stringify(changedCart)
       );
     } else {
       localStorage.setItem(
@@ -175,18 +185,26 @@ export function ProductsContextProvider({
   }
 
   function changeCartQuantity(productId: number, quantity: number) {
-    setCart((state) =>
-      state.map((product) => {
-        if (product.id === productId) {
-          product.quantity = quantity;
-        }
-        return product;
-      })
+    const changedCart = cart.map((product) => {
+      if (product.id === productId) {
+        product.quantity = quantity;
+      }
+      return product;
+    });
+    setCart(changedCart);
+    localStorage.setItem(
+      "CoffeeDelivery:1.0/items",
+      JSON.stringify(changedCart)
     );
   }
 
   function removeFromCart(productId: Number) {
-    setCart((state) => state.filter((product) => product.id !== productId));
+    const changedCart = cart.filter((product) => product.id !== productId);
+    setCart(changedCart);
+    localStorage.setItem(
+      "CoffeeDelivery:1.0/items",
+      JSON.stringify(changedCart)
+    );
   }
 
   return (

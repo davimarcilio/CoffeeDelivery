@@ -3,18 +3,45 @@ import {
   CreditCard,
   CurrencyDollar,
   MapPinLine,
-  Minus,
   Money,
-  Plus,
-  Trash,
 } from "phosphor-react";
 
 import { Card } from "./components/Card";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { ProductItem } from "./components/ProductItem";
+import cep from "cep-promise";
+import { useEffect, useState } from "react";
+
+interface AddressProps {
+  cep: string;
+  state: string;
+  city: string;
+  street: string;
+  neighborhood: string;
+}
 
 export function Checkout() {
+  const [CEP, setCEP] = useState("");
+  const [address, setAddress] = useState<AddressProps>({
+    cep: "",
+    state: "",
+    city: "",
+    street: "",
+    neighborhood: "",
+  });
+  useEffect(() => {
+    async function getAddress(cepStr: string) {
+      const response = await cep(cepStr);
+      setAddress(response);
+    }
+    if (!!CEP) {
+      const interval = setInterval(() => {
+        return getAddress(CEP);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [CEP]);
   return (
     <form className="flex gap-8 justify-between mb-4">
       <div className="flex flex-col gap-3 flex-1">
@@ -32,10 +59,16 @@ export function Checkout() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <Input className="w-200px" placeholder="CEP" />
-            <Input placeholder="Rua" />
+            <Input
+              required
+              onChange={(e) => setCEP(e.currentTarget.value)}
+              value={CEP}
+              className="w-200px"
+              placeholder="CEP"
+            />
+            <Input placeholder="Rua" value={address.street} />
             <div className="flex gap-3">
-              <Input className="w-200px" placeholder="Número" />
+              <Input required className="w-200px" placeholder="Número" />
               <div className="flex justify-center items-center flex-1 w-full relative">
                 <label
                   className="absolute right-3 text-base-label text-xs italic font-Roboto "
@@ -52,9 +85,24 @@ export function Checkout() {
               </div>
             </div>
             <div className="flex gap-3">
-              <Input className="w-200px" placeholder="Bairro" />
-              <Input className="flex-1 " placeholder="Cidade" />
-              <Input className="w-60px" placeholder="UF" />
+              <Input
+                required
+                value={address.neighborhood}
+                className="w-200px"
+                placeholder="Bairro"
+              />
+              <Input
+                required
+                value={address.city}
+                className="flex-1 "
+                placeholder="Cidade"
+              />
+              <Input
+                required
+                value={address.state}
+                className="w-60px"
+                placeholder="UF"
+              />
             </div>
           </div>
         </Card>

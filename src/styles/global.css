@@ -6,7 +6,7 @@ body {
 
 :focus {
   outline: 0;
-  box-shadow: 0 0 0 2px #4b2995;
+  box-shadow: 0 0 0 2px #c47f17;
 }
 
 @tailwind base;

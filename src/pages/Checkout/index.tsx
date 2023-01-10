@@ -1,48 +1,93 @@
-import { CurrencyDollar, MapPinLine } from "phosphor-react";
+import {
+  Bank,
+  CreditCard,
+  CurrencyDollar,
+  MapPinLine,
+  Money,
+} from "phosphor-react";
+import { Card } from "./components/Card";
+import { Input } from "./components/Input";
+import { PaymentMethod } from "./components/PaymentMethod";
 
 export function Checkout() {
   return (
     <form className="flex">
-      <div>
-        <h1>Complete seu pedido </h1>
-        <div className="flex flex-col">
-          <div className="flex">
-            <MapPinLine size={22} />
+      <div className="flex flex-col gap-3">
+        <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
+        <Card>
+          <div className="flex gap-2">
+            <MapPinLine className="text-yellow-dark" size={22} />
             <div>
-              <h1>Endereço de Entrega</h1>
-              <p>Informe o endereço onde deseja receber seu pedido</p>
+              <h1 className="font-Roboto text-base-subtitle">
+                Endereço de Entrega
+              </h1>
+              <p className="text-sm font-Roboto text-base-text">
+                Informe o endereço onde deseja receber seu pedido
+              </p>
             </div>
           </div>
-          <input className="w-52" type="text" placeholder="CEP" />
-          <input type="text" placeholder="Rua" />
-          <div className="flex">
-            <input type="text" placeholder="Número" />
-            <input
-              name="complemento"
-              id="complemento"
-              type="text"
-              placeholder="Complemento"
-            />
-            <label htmlFor="complemento">Opcional</label>
+          <div className="flex flex-col gap-4">
+            <Input className="w-52" placeholder="CEP" />
+            <Input placeholder="Rua" />
+            <div className="flex gap-3">
+              <Input placeholder="Número" />
+              <div className="flex justify-center items-center flex-1 w-full relative">
+                <label
+                  className="absolute right-3 text-base-label text-xs italic font-Roboto "
+                  htmlFor="complemento"
+                >
+                  Opcional
+                </label>
+                <Input
+                  name="complemento"
+                  id="complemento"
+                  placeholder="Complemento"
+                  className="flex-1"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <Input placeholder="Bairro" />
+              <Input placeholder="Cidade" />
+              <Input placeholder="UF " />
+            </div>
           </div>
-          <div>
-            <input type="text" placeholder="Bairro" />
-            <input type="text" placeholder="Cidade" />
-            <input type="text" placeholder="UF " />
-          </div>
-        </div>
+        </Card>
 
-        <div>
-          <div className="flex">
-            <CurrencyDollar size={22} />
+        <Card>
+          <div className="flex gap-2">
+            <CurrencyDollar className="text-purple" size={22} />
             <div className="flex flex-col">
-              <h1>Pagamento</h1>
-              <p>
+              <h1 className="font-Roboto text-base-subtitle">Pagamento</h1>
+              <p className="text-sm font-Roboto text-base-text">
                 O pagamento é feito na entrega. Escolha a forma que deseja pagar
               </p>
             </div>
           </div>
-        </div>
+          <div className="flex justify-center items-center gap-3">
+            <PaymentMethod
+              icon={<CreditCard className="text-purple" size={16} />}
+              labelText="CARTÃO DE CRÉDITO"
+              type="credit"
+            />
+
+            <PaymentMethod
+              icon={<Bank className="text-purple" size={16} />}
+              labelText="CARTÃO DE DÉBITO"
+              type="debit"
+            />
+
+            <PaymentMethod
+              icon={<Money className="text-purple" size={16} />}
+              labelText="DINHEIRO"
+              type="money"
+            />
+
+            {/* <input type="radio">CARTÃO DE CRÉDITO
+            <input type="radio">CARTÃO DE DÉBITO
+            <input type="radio">DINHEIRO</input> */}
+          </div>
+        </Card>
       </div>
       <div>
         <h1>Cafés selecionados</h1>

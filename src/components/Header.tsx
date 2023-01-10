@@ -13,7 +13,7 @@ export function Header() {
           </strong>
         </span>
         <NavLink
-          to={"/checkout"}
+          to="/checkout"
           className="p-2 bg-yellow-light rounded-md flex justify-center items-center"
         >
           <ShoppingCart className="text-yellow-dark" size={22} weight="fill" />

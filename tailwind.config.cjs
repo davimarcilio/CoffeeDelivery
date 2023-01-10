@@ -7,6 +7,9 @@ module.exports = {
         Baloo: "'Baloo 2'",
         Roboto: "Roboto",
       },
+      maxHeight: {
+        "544pxbackground": "34rem",
+      },
       borderRadius: {
         36: "2.25rem",
       },

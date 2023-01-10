@@ -24,6 +24,9 @@ export interface AddressProps {
 
 export function Checkout() {
   const [CEP, setCEP] = useState("");
+  // const [validAddress, setValidAddress] = useState(true);
+  // const [errorBar, setErrorBar] = useState("");
+
   const [address, setAddress] = useState<AddressProps>({
     cep: "",
     state: "",
@@ -31,7 +34,17 @@ export function Checkout() {
     street: "",
     neighborhood: "",
   });
-
+  // useEffect(() => {
+  //   if (address.city !== "Criciúma" && address.city !== "") {
+  //     return setValidAddress(true);
+  //   }
+  //   const timeout = setTimeout(() => {
+  //     setValidAddress(false);
+  //   }, 3000);
+  //   return () => {
+  //     clearTimeout(timeout);
+  //   };
+  // }, [address]);
   useEffect(() => {
     async function getAddress(cepStr: string) {
       const response = await cep(cepStr);
@@ -46,14 +59,49 @@ export function Checkout() {
   }, [CEP]);
 
   const [quantity, setQuantity] = useState(1);
+  const [treatedTotalItemsPriceOnCart, setTreatedTotalItemsPriceOnCart] =
+    useState("");
+  const [
+    treatedTotalItemsPriceOnCartWithDestination,
+    setTreatedTotalItemsPriceOnCartWithDestination,
+  ] = useState("");
   function onChangeQuantity(quantity: number) {
     setQuantity(quantity);
   }
   const CartProducts = useContext(ProductsContext);
   const { cart } = CartProducts;
 
+  useEffect(() => {
+    if (cart.length > 0) {
+      const allCartPrices = cart.map(
+        (product) => product.price * product.quantity
+      );
+      const totalPriceOnCart = allCartPrices.reduce(
+        (product, currentValue) => product + currentValue
+      );
+      const treatedTotalPriceOnCart = totalPriceOnCart
+        .toFixed(2)
+        .replace(".", ",");
+      const treatedTotalPriceOnCartWithDestination = totalPriceOnCart + 4.0;
+      setTreatedTotalItemsPriceOnCart(treatedTotalPriceOnCart);
+      setTreatedTotalItemsPriceOnCartWithDestination(
+        treatedTotalPriceOnCartWithDestination.toFixed(2).replace(".", ",")
+      );
+    }
+  }, [cart]);
+
   return (
     <form className="flex gap-8 justify-between mb-4 mt-24">
+      {/* {validAddress && (
+        <div className="absolute bg-red-400 px-10 py-4 right-10 top-24 z-50 flex flex-col">
+          <h1>Só são aceitos pedidos em criciúma!</h1>
+          <span
+            className={`bg-green-300 transition-all w-full duration-1000 h-1 absolute left-0 bottom-0`}
+          >
+            {" "}
+          </span>
+        </div>
+      )} */}
       <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
@@ -161,21 +209,29 @@ export function Checkout() {
               />
             );
           })}
-
-          <ul className="flex flex-col gap-3">
-            <li className="text-base-text font-Roboto text-sm flex justify-between">
-              Total de itens
-              <strong className="text-base font-normal">R$ 29,70</strong>
-            </li>
-            <li className="text-base-text font-Roboto text-sm flex justify-between">
-              Entrega
-              <strong className="text-base font-normal">R$ 3,50</strong>
-            </li>
-            <li className="text-base-subtitle font-bold font-Roboto text-xl flex justify-between">
-              Total
-              <strong className="text-base-subtitle text-xl">R$ 33,20</strong>
-            </li>
-          </ul>
+          <hr />
+          {cart.length > 0 ? (
+            <ul className="flex flex-col gap-3">
+              <li className="text-base-text font-Roboto text-sm flex justify-between">
+                Total de itens
+                <strong className="text-base font-normal">
+                  R$ {treatedTotalItemsPriceOnCart}
+                </strong>
+              </li>
+              <li className="text-base-text font-Roboto text-sm flex justify-between">
+                Entrega
+                <strong className="text-base font-normal">R$ 4,00</strong>
+              </li>
+              <li className="text-base-subtitle font-bold font-Roboto text-xl flex justify-between">
+                Total
+                <strong className="text-base-subtitle text-xl">
+                  R$ {treatedTotalItemsPriceOnCartWithDestination}
+                </strong>
+              </li>
+            </ul>
+          ) : (
+            <h1>Seu carrinho está vazio</h1>
+          )}
           <button
             className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
             type="submit"

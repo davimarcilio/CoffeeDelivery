@@ -141,6 +141,7 @@ interface ProductsContextType {
   cart: Cart[];
   addToCart: (newProduct: Cart) => void;
   removeFromCart: (productId: Number) => void;
+  changeCartQuantity: (productId: number, quantity: number) => void;
 }
 
 export const ProductsContext = createContext({} as ProductsContextType);
@@ -169,13 +170,24 @@ export function ProductsContextProvider({
     }
   }
 
+  function changeCartQuantity(productId: number, quantity: number) {
+    setCart((state) =>
+      state.map((product) => {
+        if (product.id === productId) {
+          product.quantity = quantity;
+        }
+        return product;
+      })
+    );
+  }
+
   function removeFromCart(productId: Number) {
     setCart((state) => state.filter((product) => product.id !== productId));
   }
 
   return (
     <ProductsContext.Provider
-      value={{ products, cart, addToCart, removeFromCart }}
+      value={{ products, cart, addToCart, removeFromCart, changeCartQuantity }}
     >
       {children}
     </ProductsContext.Provider>

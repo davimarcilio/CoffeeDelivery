@@ -17,12 +17,13 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
   }
 
   return (
-    <section className="flex justify-between gap-5">
-      <img className="w-16 h-16" src={product.image} alt="" />
+    <section className="flex justify-between gap-5 after:">
+      <img className="w-16 h-16" src={product.image} alt={product.name} />
       <div className="flex flex-col gap-2 justify-center">
         <h1 className="font-Roboto text-base-subtitle">{product.name}</h1>
         <div className="flex gap-2">
           <Quantity
+            productId={product.id}
             value={product.quantity}
             onChangeQuantity={onChangeQuantity}
           />

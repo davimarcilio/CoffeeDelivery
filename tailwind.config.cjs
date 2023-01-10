@@ -3,6 +3,12 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      keyframes: {
+        errorBar: {
+          from: "width: 0%",
+          to: "width: 100%",
+        },
+      },
       width: {
         "200px": "12.5rem",
         "60px": "3.75rem",

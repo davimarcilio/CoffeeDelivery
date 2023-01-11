@@ -88,18 +88,18 @@ export function Checkout() {
     <form
       action="/checkout/success"
       onSubmit={handleSubmitPurcase}
-      className="flex gap-8 justify-between mb-4 mt-24"
+      className="flex max-sm:flex-col gap-8 justify-between mb-4 mt-24"
     >
       <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
-          <div className="flex gap-2">
+          <div className="flex max-sm:flex-col max-sm:items-center gap-2">
             <MapPinLine className="text-yellow-dark" size={22} />
-            <div>
-              <h1 className="font-Roboto text-base-subtitle">
+            <div className="max-sm:flex max-sm:flex-col max-sm:items-center">
+              <h1 className="font-Roboto text-base text-base-subtitle">
                 Endereço de Entrega
               </h1>
-              <p className="text-sm font-Roboto text-base-text">
+              <p className="text-sm font-Roboto max-sm:text-center text-base-text">
                 Informe o endereço onde deseja receber seu pedido
               </p>
             </div>
@@ -109,16 +109,16 @@ export function Checkout() {
               required
               onChange={(e) => setCEP(e.currentTarget.value)}
               value={address.cep}
-              className="w-200px"
+              className="w-200px max-sm:w-full"
               placeholder="CEP"
             />
             <Input name="rua" placeholder="Rua" value={address.street} />
-            <div className="flex gap-3">
+            <div className="flex max-sm:flex-col gap-3">
               <Input
                 required
                 onChange={(e) => setNumber(e.currentTarget.value)}
                 value={address.number}
-                className="w-200px"
+                className="w-200px max-sm:w-full"
                 placeholder="Número"
                 name="numero"
               />
@@ -139,25 +139,25 @@ export function Checkout() {
                 />
               </div>
             </div>
-            <div className="flex gap-3">
+            <div className="flex max-sm:grid max-sm:grid-rows-2 max-sm:grid-flow-col-dense gap-3">
               <Input
                 required
                 value={address.neighborhood}
-                className="w-200px"
+                className="w-200px max-sm:w-full max-sm:col-span-2"
                 placeholder="Bairro"
                 name="bairro"
               />
               <Input
                 required
                 value={address.city}
-                className="flex-1 "
+                className="flex-1 max-sm:w-full"
                 placeholder="Cidade"
                 name="cidade"
               />
               <Input
                 required
                 value={address.state}
-                className="w-60px"
+                className="w-60px max-sm:w-full"
                 placeholder="UF"
                 name="estado"
               />
@@ -166,16 +166,16 @@ export function Checkout() {
         </Card>
 
         <Card>
-          <div className="flex gap-2">
+          <div className="flex max-sm:flex-col max-sm:justify-center max-sm:items-center gap-2">
             <CurrencyDollar className="text-purple" size={22} />
-            <div className="flex flex-col">
+            <div className="flex flex-col text-base max-sm:items-center">
               <h1 className="font-Roboto text-base-subtitle">Pagamento</h1>
-              <p className="text-sm font-Roboto text-base-text">
+              <p className="text-sm max-sm:text-center font-Roboto text-base-text">
                 O pagamento é feito na entrega. Escolha a forma que deseja pagar
               </p>
             </div>
           </div>
-          <div className="flex justify-center items-center gap-3">
+          <div className="flex max-sm:flex-col max-sm:items-stretch justify-center items-center gap-3">
             <PaymentMethod
               icon={<CreditCard className="text-purple" size={16} />}
               labelText="CARTÃO DE CRÉDITO"
@@ -210,8 +210,8 @@ export function Checkout() {
             );
           })}
           {cart.length > 0 ? (
-            <ul className="flex flex-col gap-3">
-              <li className="text-base-text font-Roboto text-sm flex justify-between">
+            <ul className="flex flex-col gap-3 ">
+              <li className="text-base-text font-Roboto text-sm flex justify-between mt-4">
                 Total de itens
                 <strong className="text-base font-normal">
                   R$ {treatedTotalItemsPriceOnCart}
@@ -221,7 +221,7 @@ export function Checkout() {
                 Entrega
                 <strong className="text-base font-normal">R$ 4,00</strong>
               </li>
-              <li className="text-base-subtitle font-bold font-Roboto text-xl flex justify-between">
+              <li className="mb-4 text-base-subtitle font-bold font-Roboto text-xl flex justify-between">
                 Total
                 <strong className="text-base-subtitle text-xl">
                   R$ {treatedTotalItemsPriceOnCartWithDestination}
@@ -233,28 +233,30 @@ export function Checkout() {
               Seu carrinho está vazio
             </h1>
           )}
-          {cart.length > 0 ? (
-            <button
-              onClick={() => setError(true)}
-              className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
-              type="submit"
-            >
-              CONFIRMAR PEDIDO
-            </button>
-          ) : (
-            <NavLink
-              to={"/"}
-              className="transition-colors bg-yellow hover:bg-yellow-dark flex justify-center items-center py-3 rounded-md text-white font-bold text-sm"
-              type="submit"
-            >
-              ADICIONAR PRODUTOS
-            </NavLink>
-          )}
-          {error && (
-            <h1 className="text-red-500 font-bold">
-              Selecione um metodo de pagamento
-            </h1>
-          )}
+          <div className="flex flex-col">
+            {cart.length > 0 ? (
+              <button
+                onClick={() => setError(true)}
+                className="mt-4 transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
+                type="submit"
+              >
+                CONFIRMAR PEDIDO
+              </button>
+            ) : (
+              <NavLink
+                to={"/"}
+                className="mt-4 transition-colors bg-yellow hover:bg-yellow-dark flex justify-center items-center py-3 rounded-md text-white font-bold text-sm"
+                type="submit"
+              >
+                ADICIONAR PRODUTOS
+              </NavLink>
+            )}
+            {error && (
+              <h1 className="text-red-500 mt-4 font-bold">
+                Selecione um metodo de pagamento
+              </h1>
+            )}
+          </div>
         </Card>
       </div>
     </form>

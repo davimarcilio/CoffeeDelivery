@@ -17,10 +17,16 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
   }
 
   return (
-    <section className="flex justify-between gap-5 after:">
-      <img className="w-16 h-16" src={product.image} alt={product.name} />
-      <div className="flex flex-col gap-2 justify-center">
-        <h1 className="font-Roboto text-base-subtitle">{product.name}</h1>
+    <section className="flex justify-between gap-5 max-sm:flex-col max-sm:items-center">
+      <img
+        className="w-16 h-16  min mt-4"
+        src={product.image}
+        alt={product.name}
+      />
+      <div className="flex flex-col my-4 max-sm:items-center gap-2 justify-center">
+        <h1 className="font-Roboto max-sm:text-base text-base-subtitle">
+          {product.name}
+        </h1>
         <div className="flex gap-2">
           <Quantity
             product={product}
@@ -36,7 +42,7 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
           </button>
         </div>
       </div>
-      <strong className="font-Roboto text-base-text font-bold">
+      <strong className="font-Roboto text-base text-base-text font-bold my-4">
         R$ {product.price.toFixed(2)}
       </strong>
     </section>

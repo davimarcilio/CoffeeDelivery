@@ -58,7 +58,10 @@ export function Quantity({ onChangeQuantity, value, product }: QuantityProps) {
         className="absolute right-1 group"
         type="button"
       >
-        <Minus className="transition-colors text-purple group-hover:text-purple-dark" />
+        <Minus
+          size={14}
+          className="transition-colors text-purple group-hover:text-purple-dark"
+        />
       </button>
     </div>
   );

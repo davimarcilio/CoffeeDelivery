@@ -5,7 +5,6 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
-import { useNavigate, useSubmit } from "react-router-dom";
 import { Card } from "./components/Card";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
@@ -21,7 +20,6 @@ export function Checkout() {
   const { cart, address, setAddressContext, resetCart } = CartProducts;
   const [complement, setComplement] = useState(address.complement || "");
   const [number, setNumber] = useState(address.number || "");
-  const navigate = useNavigate();
   useEffect(() => {
     if (complement !== "" || number !== "") {
       setAddressContext({
@@ -50,7 +48,6 @@ export function Checkout() {
   }, [CEP]);
 
   const [quantity, setQuantity] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("");
 
   const [treatedTotalItemsPriceOnCart, setTreatedTotalItemsPriceOnCart] =
     useState("");
@@ -84,15 +81,6 @@ export function Checkout() {
   }, [cart]);
   const [error, setError] = useState(false);
   function handleSubmitPurcase(e: FormEvent) {
-    const inputRadios = document.querySelectorAll<HTMLInputElement>(
-      'input[name="payment-method"]'
-    );
-    for (const item of inputRadios) {
-      if (item.checked === true) {
-        setPaymentMethod(item.value);
-      } else {
-      }
-    }
     resetCart();
   }
 

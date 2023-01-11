@@ -18,7 +18,7 @@ import { NavLink } from "react-router-dom";
 export function Checkout() {
   const [CEP, setCEP] = useState("");
   const CartProducts = useContext(ProductsContext);
-  const { cart, address, setAddressContext } = CartProducts;
+  const { cart, address, setAddressContext, resetCart } = CartProducts;
   const [complement, setComplement] = useState(address.complement || "");
   const [number, setNumber] = useState(address.number || "");
   const navigate = useNavigate();
@@ -82,26 +82,18 @@ export function Checkout() {
       );
     }
   }, [cart]);
+  const [error, setError] = useState(false);
   function handleSubmitPurcase(e: FormEvent) {
     const inputRadios = document.querySelectorAll<HTMLInputElement>(
       'input[name="payment-method"]'
     );
-    inputRadios;
     for (const item of inputRadios) {
       if (item.checked === true) {
         setPaymentMethod(item.value);
+      } else {
       }
     }
-    // navigate("/checkout/success", {
-    //   state: {
-    //     paymentMethod,
-    //     street: address.street,
-    //     number: address.number,
-    //     city: address.city,
-    //     uf: address.state,
-    //     neighborhood: address.neighborhood,
-    //   },
-    // });
+    resetCart();
   }
 
   return (
@@ -255,6 +247,7 @@ export function Checkout() {
           )}
           {cart.length > 0 ? (
             <button
+              onClick={() => setError(true)}
               className="transition-colors bg-yellow hover:bg-yellow-dark  py-3 rounded-md text-white font-bold text-sm"
               type="submit"
             >
@@ -268,6 +261,11 @@ export function Checkout() {
             >
               ADICIONAR PRODUTOS
             </NavLink>
+          )}
+          {error && (
+            <h1 className="text-red-500 font-bold">
+              Selecione um metodo de pagamento
+            </h1>
           )}
         </Card>
       </div>

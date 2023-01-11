@@ -156,6 +156,7 @@ interface ProductsContextType {
   removeFromCart: (productId: Number) => void;
   changeCartQuantity: (productId: number, quantity: number) => void;
   setAddressContext: (address: AddressTotalProps) => void;
+  resetCart: () => void;
 }
 
 export const ProductsContext = createContext({} as ProductsContextType);
@@ -196,6 +197,11 @@ export function ProductsContextProvider({
       );
       setCart((state) => [...state, newProduct]);
     }
+  }
+
+  function resetCart() {
+    localStorage.removeItem("CoffeeDelivery:1.0/items");
+    setCart([]);
   }
 
   function changeCartQuantity(productId: number, quantity: number) {
@@ -251,6 +257,7 @@ export function ProductsContextProvider({
         cart,
         address,
         addToCart,
+        resetCart,
         setAddressContext,
         removeFromCart,
         changeCartQuantity,

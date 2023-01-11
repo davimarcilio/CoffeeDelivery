@@ -4,9 +4,9 @@ import { ListItem } from "./ListItem";
 import Background from "../../../assets/Background.png";
 export function Header() {
   return (
-    <section className="flex justify-between items-center gap-14 h-[544px]">
+    <section className="flex max-sm:text-center justify-between items-center gap-14 h-[544px] ">
       <img
-        className="absolute left-0 w-full max-h-544pxbackground h-full"
+        className="absolute max-sm:hidden left-0 w-full max-h-544pxbackground h-full"
         src={Background}
         alt=""
       />
@@ -49,7 +49,7 @@ export function Header() {
           </ul>
         </div>
       </div>
-      <img src={Cafe} alt="Café" className="z-40" />
+      <img src={Cafe} alt="Café" className="z-40 max-sm:hidden" />
     </section>
   );
 }

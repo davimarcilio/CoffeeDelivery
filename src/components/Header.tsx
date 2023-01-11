@@ -11,7 +11,7 @@ export function Header() {
     setCartLenght(cart.length);
   }, [cart]);
   return (
-    <header className="font-Roboto flex justify-between py-8 top-0 z-50 w-full px-40 fixed left-0 bg-background">
+    <header className="font-Roboto flex justify-between py-8 top-0 z-50 w-full px-40 max-sm:px-4  fixed left-0 bg-background">
       <NavLink to={"/"}>
         <img src={Logo} alt="Coffé Delivery" />
       </NavLink>

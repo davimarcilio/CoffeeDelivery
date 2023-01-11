@@ -1,4 +1,18 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
+import {
+  addProductToCart,
+  changeCartQuantityFromCart,
+  getStoredLocalList,
+  removeProductFromCart,
+  resetProductsFromCart,
+} from "../reducers/products/actions";
+import { productsReducer } from "../reducers/products/reducer";
 
 interface Type {
   type: "TRADICIONAL" | "GELADO" | "COM LEITE" | "ESPECIAL" | "ALCOÓLICO";
@@ -153,8 +167,8 @@ interface ProductsContextType {
   cart: Cart[];
   address: AddressTotalProps;
   addToCart: (newProduct: Cart) => void;
-  removeFromCart: (productId: Number) => void;
-  changeCartQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (product: Cart) => void;
+  changeCartQuantity: (product: Cart, quantity: number) => void;
   setAddressContext: (address: AddressTotalProps) => void;
   resetCart: () => void;
 }
@@ -168,63 +182,30 @@ interface ProductsContextProviderProps {
 export function ProductsContextProvider({
   children,
 }: ProductsContextProviderProps) {
-  const [cart, setCart] = useState<Cart[]>([]);
+  const [productsState, dispatch] = useReducer(productsReducer, {
+    cart: [],
+  });
+  const { cart } = productsState;
   useEffect(() => {
-    if (!!localStorage.getItem("CoffeeDelivery:1.0/items")) {
-      const localStoredItems = JSON.parse(
-        localStorage.getItem("CoffeeDelivery:1.0/items")!
+    if (!!localStorage.getItem("CoffeeDelivery:1.0/address")) {
+      setAddress(
+        JSON.parse(localStorage.getItem("CoffeeDelivery:1.0/address")!)
       );
-      setCart(localStoredItems);
     }
+    dispatch(getStoredLocalList());
   }, []);
   function addToCart(newProduct: Cart) {
-    if (!!cart.find((product) => product.id === newProduct.id)) {
-      const changedCart = cart.map((product) => {
-        if (product.id === newProduct.id) {
-          product.quantity = product.quantity + 1;
-        }
-        return product;
-      });
-      setCart(changedCart);
-      localStorage.setItem(
-        "CoffeeDelivery:1.0/items",
-        JSON.stringify(changedCart)
-      );
-    } else {
-      localStorage.setItem(
-        "CoffeeDelivery:1.0/items",
-        JSON.stringify([...cart, newProduct])
-      );
-      setCart((state) => [...state, newProduct]);
-    }
+    dispatch(addProductToCart(newProduct));
   }
-
+  function removeFromCart(product: Cart) {
+    dispatch(removeProductFromCart(product));
+  }
   function resetCart() {
-    localStorage.removeItem("CoffeeDelivery:1.0/items");
-    setCart([]);
+    dispatch(resetProductsFromCart());
   }
 
-  function changeCartQuantity(productId: number, quantity: number) {
-    const changedCart = cart.map((product) => {
-      if (product.id === productId) {
-        product.quantity = quantity;
-      }
-      return product;
-    });
-    setCart(changedCart);
-    localStorage.setItem(
-      "CoffeeDelivery:1.0/items",
-      JSON.stringify(changedCart)
-    );
-  }
-
-  function removeFromCart(productId: Number) {
-    const changedCart = cart.filter((product) => product.id !== productId);
-    setCart(changedCart);
-    localStorage.setItem(
-      "CoffeeDelivery:1.0/items",
-      JSON.stringify(changedCart)
-    );
+  function changeCartQuantity(product: Cart, quantity: number) {
+    dispatch(changeCartQuantityFromCart(product, quantity));
   }
 
   const [address, setAddress] = useState<AddressTotalProps>({
@@ -241,14 +222,6 @@ export function ProductsContextProvider({
     localStorage.setItem("CoffeeDelivery:1.0/address", JSON.stringify(address));
     setAddress(JSON.parse(localStorage.getItem("CoffeeDelivery:1.0/address")!));
   }
-
-  useEffect(() => {
-    if (!!localStorage.getItem("CoffeeDelivery:1.0/address")) {
-      setAddress(
-        JSON.parse(localStorage.getItem("CoffeeDelivery:1.0/address")!)
-      );
-    }
-  }, []);
 
   return (
     <ProductsContext.Provider

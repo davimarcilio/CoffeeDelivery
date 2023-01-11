@@ -1,25 +1,23 @@
 import { Minus, Plus } from "phosphor-react";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { ProductsContext } from "../../context/ProductContext";
+import { Cart, ProductsContext } from "../../context/ProductContext";
 
 interface QuantityProps {
   value?: number;
-  productId?: number;
+  product?: Cart;
   onChangeQuantity: (value: number) => void;
 }
 
-export function Quantity({
-  onChangeQuantity,
-  value,
-  productId,
-}: QuantityProps) {
+export function Quantity({ onChangeQuantity, value, product }: QuantityProps) {
   const [quantity, setQuantity] = useState(value || 1);
   const productContext = useContext(ProductsContext);
   const { changeCartQuantity, cart } = productContext;
   useEffect(() => {
     onChangeQuantity(quantity);
-    if (cart.length > 0) {
-      changeCartQuantity(productId || 0, quantity);
+    if (product) {
+      if (cart.find((productCart) => productCart.id === product.id)) {
+        changeCartQuantity(product, quantity);
+      }
     }
   }, [quantity]);
 

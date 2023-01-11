@@ -12,8 +12,8 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
   const ProductContext = useContext(ProductsContext);
   const { removeFromCart } = ProductContext;
 
-  function handleRemoveFromCart(productId: number) {
-    removeFromCart(productId);
+  function handleRemoveFromCart(product: Cart) {
+    removeFromCart(product);
   }
 
   return (
@@ -23,12 +23,12 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
         <h1 className="font-Roboto text-base-subtitle">{product.name}</h1>
         <div className="flex gap-2">
           <Quantity
-            productId={product.id}
+            product={product}
             value={product.quantity}
             onChangeQuantity={onChangeQuantity}
           />
           <button
-            onClick={() => handleRemoveFromCart(product.id)}
+            onClick={() => handleRemoveFromCart(product)}
             className="transition-colors px-2 gap-1 rounded-md bg-base-button text-xs flex justify-center items-center font-Roboto hover:bg-base-hover text-base-text leading-5"
             type="button"
           >

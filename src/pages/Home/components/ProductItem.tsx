@@ -26,7 +26,11 @@ export function ProductItem({ product }: ProductProps) {
 
   return (
     <section className="flex flex-col justify-center items-center bg-base-card font-Roboto text-center rounded-md rounded-tr-36 rounded-bl-36 p-6 pt-0">
-      <img className="-mt-6" src={image} alt="Expresso Tracicional" />
+      <img
+        className="-mt-6"
+        src={`/CoffeeDelivery${image}`}
+        alt="Expresso Tracicional"
+      />
       <div className="flex gap-1">
         {types.map((type) => (
           <span

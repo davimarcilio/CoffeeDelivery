@@ -20,7 +20,7 @@ export function ProductItem({ onChangeQuantity, product }: ProductItemProps) {
     <section className="flex justify-between gap-5 max-sm:flex-col max-sm:items-center">
       <img
         className="w-16 h-16  min mt-4"
-        src={product.image}
+        src={`/CoffeeDelivery${product.image}`}
         alt={product.name}
       />
       <div className="flex flex-col my-4 max-sm:items-center gap-2 justify-center">

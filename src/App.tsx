@@ -5,7 +5,7 @@ import { Router } from "./Router";
 export function App() {
   return (
     <ProductsContextProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={window.location.pathname || ""}>
         <Router />
       </BrowserRouter>
     </ProductsContextProvider>

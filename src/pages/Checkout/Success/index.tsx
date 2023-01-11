@@ -1,7 +1,9 @@
 import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import illustration from "../../../assets/Illustration.png";
-// import { SuccessInfo } from "./components/SuccessInfo";
+import { useLocation } from "react-router-dom";
 export function Success() {
+  const searchParams = new URLSearchParams(useLocation().search);
+
   return (
     <main className="mt-28 flex flex-col gap-10">
       <div>
@@ -22,13 +24,14 @@ export function Success() {
                 </div>
                 <div className="flex flex-col">
                   <p className="font-Roboto text-base-text">
-                    Entrega em
+                    Entrega em{" "}
                     <strong className="font-bold">
-                      Avenida Luiz Lazarim, 873
+                      {searchParams.get("rua")}, {searchParams.get("numero")}
                     </strong>
                   </p>
                   <p className="font-Roboto text-base-text">
-                    Vila Floresta, Criciúma, SC
+                    {searchParams.get("bairro")}, {searchParams.get("cidade")},{" "}
+                    {searchParams.get("estado")}
                   </p>
                 </div>
               </li>
@@ -51,7 +54,14 @@ export function Success() {
                 </div>
                 <div className="flex flex-col font-Roboto text-base-text">
                   Pagamento na entrega
-                  <strong>Cartão de Crédito</strong>
+                  <strong>
+                    {searchParams.get("payment-method") === "debit" &&
+                      "CARTÃO DE DÉBITO"}
+                    {searchParams.get("payment-method") === "credit" &&
+                      "CARTÃO DE CRÉDITO"}
+                    {searchParams.get("payment-method") === "money" &&
+                      "DINHEIRO"}
+                  </strong>
                 </div>
               </li>
             </ul>

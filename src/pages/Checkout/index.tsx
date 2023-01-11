@@ -5,13 +5,13 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
-
+import { useNavigate, useSubmit } from "react-router-dom";
 import { Card } from "./components/Card";
 import { Input } from "./components/Input";
 import { PaymentMethod } from "./components/PaymentMethod";
 import { ProductItem } from "./components/ProductItem";
 import cep from "cep-promise";
-import { useContext, useEffect, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductContext";
 import { NavLink } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export function Checkout() {
   const { cart, address, setAddressContext } = CartProducts;
   const [complement, setComplement] = useState(address.complement || "");
   const [number, setNumber] = useState(address.number || "");
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (complement !== "" || number !== "") {
       setAddressContext({
@@ -50,6 +50,8 @@ export function Checkout() {
   }, [CEP]);
 
   const [quantity, setQuantity] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState("");
+
   const [treatedTotalItemsPriceOnCart, setTreatedTotalItemsPriceOnCart] =
     useState("");
 
@@ -80,9 +82,34 @@ export function Checkout() {
       );
     }
   }, [cart]);
+  function handleSubmitPurcase(e: FormEvent) {
+    const inputRadios = document.querySelectorAll<HTMLInputElement>(
+      'input[name="payment-method"]'
+    );
+    inputRadios;
+    for (const item of inputRadios) {
+      if (item.checked === true) {
+        setPaymentMethod(item.value);
+      }
+    }
+    // navigate("/checkout/success", {
+    //   state: {
+    //     paymentMethod,
+    //     street: address.street,
+    //     number: address.number,
+    //     city: address.city,
+    //     uf: address.state,
+    //     neighborhood: address.neighborhood,
+    //   },
+    // });
+  }
 
   return (
-    <form className="flex gap-8 justify-between mb-4 mt-24">
+    <form
+      action="/checkout/success"
+      onSubmit={handleSubmitPurcase}
+      className="flex gap-8 justify-between mb-4 mt-24"
+    >
       <div className="flex flex-col gap-3 flex-1">
         <h1 className="font-bold font-Baloo text-lg">Complete seu pedido</h1>
         <Card>
@@ -105,7 +132,7 @@ export function Checkout() {
               className="w-200px"
               placeholder="CEP"
             />
-            <Input placeholder="Rua" value={address.street} />
+            <Input name="rua" placeholder="Rua" value={address.street} />
             <div className="flex gap-3">
               <Input
                 required
@@ -113,6 +140,7 @@ export function Checkout() {
                 value={address.number}
                 className="w-200px"
                 placeholder="Número"
+                name="numero"
               />
               <div className="flex justify-center items-center flex-1 w-full relative">
                 <label
@@ -137,18 +165,21 @@ export function Checkout() {
                 value={address.neighborhood}
                 className="w-200px"
                 placeholder="Bairro"
+                name="bairro"
               />
               <Input
                 required
                 value={address.city}
                 className="flex-1 "
                 placeholder="Cidade"
+                name="cidade"
               />
               <Input
                 required
                 value={address.state}
                 className="w-60px"
                 placeholder="UF"
+                name="estado"
               />
             </div>
           </div>

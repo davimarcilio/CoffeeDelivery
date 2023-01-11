@@ -7,16 +7,16 @@ export function Success() {
   return (
     <main className="mt-28 flex flex-col gap-10">
       <div>
-        <h1 className="text-yellow-dark font-Baloo font-extrabold text-3xl">
+        <h1 className="text-yellow-dark max-sm:text-center font-Baloo font-extrabold text-3xl">
           Uhu! Pedido confirmado
         </h1>
-        <p className="text-xl font-Roboto text-base-subtitle">
+        <p className="text-xl font-Roboto max-sm:text-center text-base-subtitle">
           Agora é só aguardar que logo o café chegará até você{" "}
         </p>
       </div>
       <div className="flex justify-between">
         <div className="flex justify-between bg-gradient-to-br from-[#dbac2c] p-1 to-[#8047f8]  border  flex-1 rounded-md rounded-tr-36 rounded-bl-36">
-          <div className="flex flex-col rounded-md bg-background w-full h-full rounded-tr-36 rounded-bl-36">
+          <div className="flex max-sm:py-10 flex-col rounded-md bg-background w-full h-full rounded-tr-36 rounded-bl-36">
             <ul className="flex flex-col gap-8 justify-center h-full">
               <li className="pl-10 flex gap-3 items-center">
                 <div className="p-2 h-min bg-purple rounded-full">
@@ -67,7 +67,7 @@ export function Success() {
             </ul>
           </div>
         </div>
-        <img src={illustration} alt="Moto" />
+        <img className="max-sm:hidden" src={illustration} alt="Moto" />
       </div>
     </main>
   );

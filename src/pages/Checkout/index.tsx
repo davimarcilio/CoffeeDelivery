@@ -12,7 +12,7 @@ import { ProductItem } from "./components/ProductItem";
 import cep from "cep-promise";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/ProductContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export function Checkout() {
   const [CEP, setCEP] = useState("");
@@ -79,14 +79,16 @@ export function Checkout() {
       );
     }
   }, [cart]);
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   function handleSubmitPurcase(e: FormEvent) {
+    e.preventDefault();
     resetCart();
+    navigate("/checkout/success");
   }
 
   return (
     <form
-      action="/checkout/success"
       onSubmit={handleSubmitPurcase}
       className="flex max-sm:flex-col gap-8 justify-between mb-4 mt-24"
     >
